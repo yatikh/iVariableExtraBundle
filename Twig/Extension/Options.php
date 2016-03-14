@@ -21,26 +21,23 @@ class Options extends \Twig_Extension {
 
 	public function getFilters(){
 		return array(
-            'truncate' => new \Twig_Filter_Method($this, 'modTruncate'),
-            'number' => new \Twig_Filter_Method($this, 'modNumber'),
-            'split' => new \Twig_Filter_Method($this, 'modSplit'),
-            'uri' => new \Twig_Filter_Method($this, 'modUri'),
-            'startsWith' => new \Twig_Filter_Method($this, 'modStartsWith'),
-            'endsWith' => new \Twig_Filter_Method($this, 'modEndsWith'),
-            'contains' => new \Twig_Filter_Method($this, 'modContains'),
-            'pad' => new \Twig_Filter_Function('str_pad'),
-            'md5' => new \Twig_Filter_Function('md5'),
-            'jsonEncode' => new \Twig_Filter_Function('json_encode'),
-            'jsonDecode' => new \Twig_Filter_Function('json_decode'),
-            'round' => new \Twig_Filter_Function('round'),
-            'trim' => new \Twig_Filter_Function('trim'),
-            'ltrim' => new \Twig_Filter_Function('ltrim'),
-            'rtrim' => new \Twig_Filter_Function('rtrim'),
-            'substring' => new \Twig_Filter_Function('substr'),
-            'dump' => new \Twig_Filter_Function('var_dump'),
-            'shift' => new \Twig_Filter_Function('array_shift'),
-            'pop' => new \Twig_Filter_Function('array_pop'),
-            'count' => new \Twig_Filter_Function('count'),
+			new \Twig_SimpleFilter('truncate', array($this, 'modTruncate')),
+			new \Twig_SimpleFilter('number', array($this, 'modNumber')),
+			new \Twig_SimpleFilter('uri', array($this, 'modUri')),
+			new \Twig_SimpleFilter('startsWith', array($this, 'modStartsWith')),
+			new \Twig_SimpleFilter('endsWith', array($this, 'modEndsWith')),
+			new \Twig_SimpleFilter('contains', array($this, 'modContains')),
+			new \Twig_SimpleFilter('pad', 'str_pad'),
+			new \Twig_SimpleFilter('md5', 'md5'),
+			new \Twig_SimpleFilter('jsonEncode', 'json_encode'),
+			new \Twig_SimpleFilter('jsonDecode', 'json_decode'),
+			new \Twig_SimpleFilter('ltrim', 'ltrim'),
+			new \Twig_SimpleFilter('rtrim', 'rtrim'),
+			new \Twig_SimpleFilter('substring', 'substr'),
+			new \Twig_SimpleFilter('dump', 'var_dump'),
+			new \Twig_SimpleFilter('shift', 'array_shift'),
+			new \Twig_SimpleFilter('pop', 'array_pop'),
+			new \Twig_SimpleFilter('count', 'count'),
         );
 	}
 
@@ -149,10 +146,6 @@ class Options extends \Twig_Extension {
 
     public function isAbsoluteUrl($url) {
         return preg_match('/^[a-zA-Z]+\:.+/', $url);
-    }
-
-    public function modSplit($str, $delimiter) {
-        return explode($delimiter, $str);
     }
 
     public function modStartsWith($str, $cmp) {
