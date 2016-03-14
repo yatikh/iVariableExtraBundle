@@ -3,7 +3,7 @@ namespace iVariable\ExtraBundle\Twig\Extension;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class Options extends \Twig_Extension {
+class Options extends \Twig_Extension implements \Twig_Extension_GlobalsInterface {
 
 	protected $container;
 
