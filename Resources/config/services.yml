@@ -4,7 +4,7 @@ parameters:
 
 services:
   iv.user:
-    class: %ivariable.extra.user.class%
+    class: "%ivariable.extra.user.class%"
     arguments:
       context: "@security.context"
 
