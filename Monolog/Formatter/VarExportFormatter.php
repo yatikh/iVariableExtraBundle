@@ -1,9 +1,10 @@
 <?php
+
 namespace iVariable\ExtraBundle\Monolog\Formatter;
 
-class VarExportFormatter extends \Monolog\Formatter\LineFormatter{
-
-	protected function convertToString($data)
+class VarExportFormatter extends \Monolog\Formatter\LineFormatter
+{
+    protected function convertToString($data)
     {
         if (null === $data || is_scalar($data)) {
             return (string) $data;
@@ -32,6 +33,6 @@ class VarExportFormatter extends \Monolog\Formatter\LineFormatter{
             return '[resource]';
         }
 
-        return sprintf("[object] (%s: %s)", get_class($data), var_export($data, true));
+        return sprintf('[object] (%s: %s)', get_class($data), var_export($data, true));
     }
 }

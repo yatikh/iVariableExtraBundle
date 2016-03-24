@@ -10,14 +10,14 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class iVariableExtraExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -27,12 +27,12 @@ class iVariableExtraExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        if( !empty( $config['repo'] ) ){
+        if (!empty($config['repo'])) {
             //Main Repo
             $container->setDefinition(
                 'iv.repo',
                 new Definition(
-                    $container->getParameter( 'ivariable.extra.repo.class'),
+                    $container->getParameter('ivariable.extra.repo.class'),
                     array(
                         'em' => new Reference('em'),
                         'map' => $config['repo'],
@@ -41,9 +41,9 @@ class iVariableExtraExtension extends Extension
                 )
             );
 
-            foreach( $config['repo'] as $key => $options ){
+            foreach ($config['repo'] as $key => $options) {
                 $definition = new Definition(
-                    $container->getParameter( 'ivariable.extra.repo.class'),
+                    $container->getParameter('ivariable.extra.repo.class'),
                     array($key)
                 );
                 $definition->setFactory(array(new Reference('iv.repo'), 'get'));

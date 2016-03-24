@@ -1,34 +1,38 @@
 <?php
+
 namespace iVariable\ExtraBundle\Service\Repository;
 
 class CreationalRepositoryDecorator
 {
+    private $name = null;
+    private $repo = null;
+    private $creator = null;
 
-	private $name = null;
-	private $repo = null;
-	private $creator = null;
+    public function __construct($creator, $name, $repo)
+    {
+        $this->creator = $creator;
+        $this->name = $name;
+        $this->repo = $repo;
+        if (is_a($this->repo, '\\Symfony\\Component\\DependencyInjection\\ContainerAwareInterface')) {
+            $this->repo->setContainer($this->getContainer());
+        }
+        $this->repo->wrapper = $this;
+    }
 
-	public function __construct( $creator, $name, $repo ){
-		$this->creator			= $creator;
-		$this->name				= $name;
-		$this->repo				= $repo;
-		if( is_a( $this->repo, '\\Symfony\\Component\\DependencyInjection\\ContainerAwareInterface') ){
-			$this->repo->setContainer( $this->getContainer() );
-		}
-		$this->repo->wrapper	= $this;
-	}
+    public function __call($method, $args)
+    {
+        return call_user_func_array(array($this->repo, $method), $args);
+    }
 
-	public function __call( $method, $args ){
-		return call_user_func_array( array( $this->repo, $method ) , $args);
-	}
+    public function newEntity()
+    {
+        $args = func_get_args();
 
-	public function newEntity(){
-		$args = func_get_args();
-		return $this->creator->newEntity( $this->name, $args );
-	}
+        return $this->creator->newEntity($this->name, $args);
+    }
 
-	public function getContainer(){
-		return $this->creator->getContainer();
-	}
-
+    public function getContainer()
+    {
+        return $this->creator->getContainer();
+    }
 }
