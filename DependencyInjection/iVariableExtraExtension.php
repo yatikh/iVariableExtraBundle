@@ -25,8 +25,7 @@ class iVariableExtraExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-		//var_dump($container->getParameter( 'ivariable.extra.repo.class'), $container);die();
-		//var_dump($config);
+
 		if( !empty( $config['repo'] ) ){
 
 			//Main Repo
@@ -49,8 +48,7 @@ class iVariableExtraExtension extends Extension
 						$key
 					)
 				);
-				$definition->setFactoryService('iv.repo');
-				$definition->setFactoryMethod('get');
+				$definition->setFactory(array('iv.repo', 'get'));
 				$container->setDefinition(
 					'iv.repo.'.$key,
 					$definition
